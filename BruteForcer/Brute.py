@@ -51,6 +51,8 @@ class Brute:
         #part of flag if obtained alredy
         self.flag = kwargs.get('flag',DefaultOptions['flag'])
 
+    def setLen(self,l):
+        self.len=l
 
     def getLen(self):
         if self.len>0:
@@ -92,7 +94,7 @@ class Brute:
 
 
     def getCharAt(self,i):
-        ch="?"
+        ch=bcolors.WARNING+"?"+bcolors.ENDC
         if self.compareChar:
             sortedCharset="".join(sorted(self.charset))
             j=Helpers.binSearch(0,len(self.charset)-1,self.compareChar,self.display,arr=sortedCharset,index=i)
@@ -104,8 +106,12 @@ class Brute:
         else:
             for j in self.charset:
                 if self.display:
-                    sys.stdout.write(Cursors.SAVEC+Cursors.RESTOREC+Cursors.MOVEC(i+1)+bcolors.OKCYAN+j+bcolors.ENDC+Cursors.RESTOREC)
+                    if j.isprintable():
+                        sys.stdout.write(Cursors.SAVEC+Cursors.RESTOREC+Cursors.MOVEC(i+1)+bcolors.OKCYAN+j+bcolors.ENDC+Cursors.RESTOREC)
+                    else:
+                        sys.stdout.write(Cursors.SAVEC+Cursors.RESTOREC+Cursors.MOVEC(i+1)+bcolors.WARNING+'!'+bcolors.ENDC+Cursors.RESTOREC)
                     sys.stdout.flush()
+                    time.sleep(0.1)
                 if (self.checkChar(i,j)):
                     ch=j
                     break
@@ -127,7 +133,7 @@ class Brute:
                 print(bcolors.OKGREEN+' '+self.flag+bcolors.ENDC,end='')
             else:
                 print(' ',end='')
-            print(bcolors.OKCYAN+'?'*(self.len-len(self.flag))+bcolors.ENDC,end='')
+            print(bcolors.WARNING+'?'*(self.len-len(self.flag))+bcolors.ENDC,end='')
             print(Cursors.RESTOREC,end='')
 
         with ThreadPoolExecutor(max_workers=n) as executor:

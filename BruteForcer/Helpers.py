@@ -16,7 +16,10 @@ class Helpers:
 
             if arr:
                 if display:
-                    sys.stdout.write(Cursors.SAVEC+Cursors.RESTOREC+Cursors.MOVEC(i+1)+bcolors.OKCYAN+arr[mid]+bcolors.ENDC+Cursors.RESTOREC)
+                    if arr[mid].isprintable():
+                        sys.stdout.write(Cursors.SAVEC+Cursors.RESTOREC+Cursors.MOVEC(i+1)+bcolors.OKCYAN+arr[mid]+bcolors.ENDC+Cursors.RESTOREC)
+                    else:
+                        sys.stdout.write(Cursors.SAVEC+Cursors.RESTOREC+Cursors.MOVEC(i+1)+bcolors.WARNING+'!'+bcolors.ENDC+Cursors.RESTOREC)
                     sys.stdout.flush()
                 if check(i,arr[mid])==1: #true is high
                     low = mid + 1

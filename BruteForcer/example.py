@@ -4,8 +4,11 @@ from Brute import *
 FLAG="navy{:pepe-cry:}"
 
 def checkChar(i,ch):
-    if FLAG[i]==ch:
-        return True
+    try:
+        if FLAG[i]==ch:
+            return True
+    except:
+        return False
     
     return False
 
@@ -39,6 +42,8 @@ def Main():
     options['len']=10
     options['flag']='navy'
     brute = Brute(**options)
+    flag=brute.run(5)
+    brute.setLen(20)
     flag=brute.run(5)
 
     print(flag)
