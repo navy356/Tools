@@ -58,10 +58,12 @@ class Brute:
 
 
         elif self.compareLen:
-            self.len=-1
-            while self.len==-1:
+            while True:
                 if self.compareLen:
                     self.len=Helpers.binSearch(self.minLen, self.maxLen, self.compareLen, self.display)
+
+                if self.len!=-1:
+                    break
 
                 if self.warning:
                     print(bcolors.WARNING+'!!Could not find length in range({},{})'.format(self.minLen,self.maxLen)+bcolors.ENDC)
@@ -92,9 +94,12 @@ class Brute:
     def getCharAt(self,i):
         ch="?"
         if self.compareChar:
-            j=Helpers.binSearch(0,len(self.charset),self.compareChar,self.display,arr=self.charset,index=i)
+            sortedCharset="".join(sorted(self.charset))
+            j=Helpers.binSearch(0,len(self.charset)-1,self.compareChar,self.display,arr=sortedCharset,index=i)
             if j!=-1:
-                ch=self.charset[j]
+                ch=sortedCharset[j]
+            else:
+                ch="?"
         
         else:
             for j in self.charset:
@@ -105,7 +110,7 @@ class Brute:
                     ch=j
                     break
 
-        sys.stdout.write(Cursors.SAVEC+Cursors.RESTOREC+Cursors.MOVEC(i+1)+bcolors.OKGREEN+j+bcolors.ENDC+Cursors.RESTOREC)
+        sys.stdout.write(Cursors.SAVEC+Cursors.RESTOREC+Cursors.MOVEC(i+1)+bcolors.OKGREEN+ch+bcolors.ENDC+Cursors.RESTOREC)
         sys.stdout.flush()
         return ch
 

@@ -1,6 +1,8 @@
 import string
-import Cursors
+from Cursors import *
 import sys 
+from bcolors import *
+import time
 
 class Helpers:
     @staticmethod
@@ -14,13 +16,12 @@ class Helpers:
 
             if arr:
                 if display:
-                    sys.stdout.write("Trying {} - {}\r".format(arr[mid],mid))
+                    sys.stdout.write(Cursors.SAVEC+Cursors.RESTOREC+Cursors.MOVEC(i+1)+bcolors.OKCYAN+arr[mid]+bcolors.ENDC+Cursors.RESTOREC)
                     sys.stdout.flush()
-                    sys.stdout.write(Cursors.ERASE_LINE)
-                if check(i,arr[mid]): #true is high
+                if check(i,arr[mid])==1: #true is high
                     low = mid + 1
 
-                elif check(i,arr[mid]): #false is low
+                elif check(i,arr[mid])==-1: #false is low
                     high = mid - 1
 
                 else:
@@ -32,10 +33,10 @@ class Helpers:
                     sys.stdout.flush()
                     sys.stdout.write(Cursors.ERASE_LINE)
 
-                if check(mid): #true is high
+                if check(mid)==1: #true is high
                     low = mid + 1
 
-                elif check(mid): #false is low
+                elif check(mid)==-1: #false is low
                     high = mid - 1
 
                 else:
